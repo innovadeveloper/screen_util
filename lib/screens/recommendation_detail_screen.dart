@@ -283,5 +283,21 @@ class RecommendationDetailScreen extends StatelessWidget {
         ),
       ),
     );
+
+    // return Positioned(
+    //   bottom: 0,
+    //   child: Container(
+    //     // color : Colors.red,
+    //     width: ScreenUtil().setWidth(414),
+    //     height: ScreenUtil().setHeight(137),
+    //     alignment: Alignment.center,
+    //     child: BottomNav(
+    //       width: ScreenUtil().setWidth(248),
+    //       height: ScreenUtil().setHeight(64),
+    //       size1: ScreenUtil().setWidth(64),
+    //       size2: ScreenUtil().setWidth(56),
+    //       size3: ScreenUtil().setWidth(64),
+    //   ),
+    // ));
   }
 }
