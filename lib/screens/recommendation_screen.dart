@@ -7,86 +7,119 @@ class RecommendationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var isPortrait = MediaQuery.of(context).orientation == Orientation.portrait;
-    if(isPortrait)
-      ScreenUtil.init(context, width: 414, height: 896, allowFontScaling: false);
+    if (isPortrait)
+      ScreenUtil.init(context,
+          width: 414, height: 896, allowFontScaling: false);
     else
-      ScreenUtil.init(context, width: 896, height: 414, allowFontScaling: false);
+      ScreenUtil.init(context,
+          width: 896, height: 414, allowFontScaling: false);
 
     return Scaffold(
-      body: isPortrait ? Column(
+        body: Column(
+      children: <Widget>[
+        _appBar(isPortrait),
+        GestureDetector(
+          onTap: () {
+            Navigator.push(context, MaterialPageRoute(builder: (_) {
+              return RecommendationDetailScreen();
+            }));
+          },
+          child: _body(isPortrait),
+        ),
+        _footer(isPortrait),
+      ],
+    ));
+  }
+
+  Widget _footer(bool isPortrait) {
+    return Container(
+      // color: Colors.red,
+      height: ScreenUtil().setHeight(isPortrait ? 137 : 80),
+      child: BottomNav(
+        width: ScreenUtil().setWidth(248),
+        height: ScreenUtil().setHeight(64),
+        size1: ScreenUtil().setWidth(64),
+        size2: ScreenUtil().setWidth(56),
+        size3: ScreenUtil().setWidth(64),
+      ),
+    );
+  }
+
+  Widget _body(bool isPortrait) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(20),
+      child: Stack(
         children: <Widget>[
-          _appBar(isPortrait),
-          GestureDetector(
-            onTap: () {
-              // Navigator.push(context, MaterialPageRoute(builder: (_) {
-              //   return RecommendationDetailScreen();
-              // }));
-            },
-            child: Stack(
-              children: <Widget>[
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(20),
-                  child: Image.asset(
-                    'assets/images/profile.png',
-                    width: ScreenUtil().setWidth(366),
-                    height: ScreenUtil().setHeight(622),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                Positioned(
-                  right: 0,
-                  bottom: ScreenUtil().setHeight(40),
-                  child: Container(
-                    width: ScreenUtil().setWidth(342),
-                    height: ScreenUtil().setHeight(104),
-                    decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.9),
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(20),
-                        topLeft: Radius.circular(20),
-                      ),
-                    ),
-                    child: Container(
-                      padding: EdgeInsets.only(
-                        left: ScreenUtil().setWidth(22),
-                        top: ScreenUtil().setHeight(24),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text(
-                            'Malena Veronica, 23',
-                            style: TextStyle(
-                              fontSize: ScreenUtil().setSp(24),
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          Text(
-                            'Fashion Designer at Victoria\'s Secret',
-                            style: TextStyle(
-                              fontSize: ScreenUtil().setSp(16),
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ],
+          // seteando tamanios
+          Container(
+            // color: Colors.green,
+            width: ScreenUtil().setWidth(isPortrait ? 366 : 622),
+            height: ScreenUtil().setHeight(isPortrait ? 622 : 250),
+          ),
+          // Positioned(
+          //   bottom: -40,
+          //   right: 0,
+          //   child: Image(
+          //       image: AssetImage(
+          //         'assets/images/profile.png',
+          //       ),
+          //       fit: BoxFit.cover,
+          //       height: 200 + 120.0,
+          //       width: 200,
+          //     ),
+          // ),
+          Positioned(
+            top: ScreenUtil().setHeight(-10),
+            child: Image.asset(
+              'assets/images/profile.png',
+              width: ScreenUtil().setWidth(isPortrait ? 366 : 622),
+              height: ScreenUtil()
+                  .setHeight(isPortrait ? 622 : 350), // ajuste manual
+              fit: BoxFit.cover,
             ),
           ),
-          Container(
-            height: ScreenUtil().setHeight(137),
-            child: BottomNav(
-              width: ScreenUtil().setWidth(248),
-              height: ScreenUtil().setHeight(64),
-              size1: ScreenUtil().setWidth(64),
-              size2: ScreenUtil().setWidth(56),
-              size3: ScreenUtil().setWidth(64),
+          Positioned(
+            right: 0,
+            bottom: ScreenUtil().setHeight(40),
+            child: Container(
+              width: ScreenUtil().setWidth(isPortrait ? 342 : 420),
+              height: ScreenUtil().setHeight(isPortrait ? 104 : 80),
+              decoration: BoxDecoration(
+                color: Colors.white.withOpacity(0.9),
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(20),
+                  topLeft: Radius.circular(20),
+                ),
+              ),
+              child: Container(
+                // color: Colors.red,
+                padding: EdgeInsets.only(
+                  left: ScreenUtil().setWidth(22),
+                  top: ScreenUtil().setHeight(isPortrait ? 24 : 12),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      'Malena Veronica, 23',
+                      style: TextStyle(
+                        fontSize: ScreenUtil().setSp(24),
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      'Fashion Designer at Victoria\'s Secret',
+                      style: TextStyle(
+                        fontSize: ScreenUtil().setSp(16),
+                      ),
+                    )
+                  ],
+                ),
+              ),
             ),
           ),
         ],
-      ) : Container(child: _appBar(isPortrait),),
+      ),
     );
   }
 
