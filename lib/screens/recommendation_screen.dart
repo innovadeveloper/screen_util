@@ -6,12 +6,16 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class RecommendationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    ScreenUtil.init(context, width: 414, height: 896, allowFontScaling: false);
+    var isPortrait = MediaQuery.of(context).orientation == Orientation.portrait;
+    if(isPortrait)
+      ScreenUtil.init(context, width: 414, height: 896, allowFontScaling: false);
+    else
+      ScreenUtil.init(context, width: 896, height: 414, allowFontScaling: false);
 
     return Scaffold(
-      body: Column(
+      body: isPortrait ? Column(
         children: <Widget>[
-          _appBar(),
+          _appBar(isPortrait),
           GestureDetector(
             onTap: () {
               // Navigator.push(context, MaterialPageRoute(builder: (_) {
@@ -82,28 +86,24 @@ class RecommendationScreen extends StatelessWidget {
             ),
           ),
         ],
-      ),
+      ) : Container(child: _appBar(isPortrait),),
     );
   }
 
-  Widget _appBar() {
+  Widget _appBar(bool isPortrait) {
     return Container(
-      height: ScreenUtil().setHeight(137),
+      // color: Colors.red,
+      height: ScreenUtil().setHeight(isPortrait ? 137 : 70),
       padding: EdgeInsets.only(
         left: ScreenUtil().setWidth(24),
         right: ScreenUtil().setWidth(24),
-        top: ScreenUtil().setHeight(56),
+        top: ScreenUtil().setHeight(isPortrait ? 56 : 20),
       ),
       child: Container(
         height: ScreenUtil().setHeight(34),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            // Image.asset(
-            //   'assets/images/gridicons_user.png',
-            //   width: ScreenUtil().setWidth(24),
-            //   height: ScreenUtil().setHeight(24),
-            // ),
             Text(
               'For You*',
               style: TextStyle(
